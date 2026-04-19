@@ -1,16 +1,36 @@
-<h1 class="fw-bold mb-1">Reportes</h1>
-<p class="text-secondary mb-4">Análisis de ventas e inventario</p>
-<div class="row g-3 mb-4">
-  <div class="col-md-4"><div class="panel"><small>Ventas totales</small><div class="metric">S/ <?= number_format((float)$ventasTotales, 2) ?></div></div></div>
-  <div class="col-md-4"><div class="panel"><small>IGV recaudado</small><div class="metric">S/ <?= number_format((float)$igvTotal, 2) ?></div></div></div>
-  <div class="col-md-4"><div class="panel"><small>Pedidos totales</small><div class="metric"><?= count($pedidos) ?></div></div></div>
+<?php $fmtMoney = static fn($n): string => 'S/ ' . number_format((float)$n, 2); ?>
+<h1 class="page-title">Reportes</h1>
+<p class="page-sub">Análisis de ventas e inventario</p>
+
+<div class="row-g grid-3" style="margin-bottom:22px">
+  <div class="panel">
+    <div class="kpi-label">Ventas totales</div>
+    <div class="kpi-value" style="font-size:1.85rem;margin-top:8px"><?= $fmtMoney($ventasTotales) ?></div>
+  </div>
+  <div class="panel">
+    <div class="kpi-label">IGV recaudado</div>
+    <div class="kpi-value" style="font-size:1.85rem;margin-top:8px"><?= $fmtMoney($igvTotal) ?></div>
+  </div>
+  <div class="panel">
+    <div class="kpi-label">Pedidos totales</div>
+    <div class="kpi-value" style="font-size:1.85rem;margin-top:8px"><?= count($pedidos) ?></div>
+  </div>
 </div>
+
 <div class="panel">
-  <h4>Top productos vendidos</h4>
-  <?php foreach ($masVendidos as $p): ?>
-    <div class="d-flex justify-content-between border-bottom py-2">
-      <div><strong><?= htmlspecialchars($p['nombre']) ?></strong><div class="text-secondary"><?= htmlspecialchars($p['categoria']) ?></div></div>
-      <div class="text-end"><strong><?= (int)$p['vendido'] ?> uds</strong><div class="text-secondary">S/ <?= number_format((int)$p['vendido'] * (float)$p['precio_unitario'], 2) ?></div></div>
-    </div>
-  <?php endforeach; ?>
+  <h3 class="panel-title" style="margin-bottom:8px">Top productos vendidos</h3>
+  <div>
+    <?php foreach ($masVendidos as $p): ?>
+      <div class="report-row">
+        <div>
+          <div class="name"><?= htmlspecialchars($p['nombre']) ?></div>
+          <div class="cat"><?= htmlspecialchars($p['categoria']) ?></div>
+        </div>
+        <div>
+          <div class="count"><?= (int)$p['vendido'] ?> uds</div>
+          <div class="amount"><?= $fmtMoney((int)$p['vendido'] * (float)$p['precio_unitario']) ?></div>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  </div>
 </div>
