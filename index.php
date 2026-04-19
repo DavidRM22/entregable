@@ -28,7 +28,11 @@ $routes = [
     'pedidos/update-status' => [App\Controllers\PedidosController::class, 'updateStatus'],
     'facturas' => [App\Controllers\FacturasController::class, 'index'],
     'facturas/generate' => [App\Controllers\FacturasController::class, 'generate'],
+    'facturas/download' => [App\Controllers\FacturasController::class, 'download'],
     'reportes' => [App\Controllers\ReportesController::class, 'index'],
+    'api/dashboard-metrics' => [App\Controllers\ApiController::class, 'dashboardMetrics'],
+    'api/search' => [App\Controllers\ApiController::class, 'globalSearch'],
+    'api/productos' => [App\Controllers\ApiController::class, 'productosSearch'],
 ];
 
 if (!isset($routes[$route])) {
